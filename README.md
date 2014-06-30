@@ -5,7 +5,6 @@ Some sample REST code (with curl) to push to both Urban Airship and Parse is bel
 
 
 **Parse Basic Push** 
-
 Pushes to IOS devices with an extra payload key-value pair for a url
 
 curl -X POST   
