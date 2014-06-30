@@ -29,15 +29,15 @@ Sends a push to all iOS devices where the citi flag is true. The alert is "hi" a
 	 -H "Content-Type: application/json" \
 	 -d '{
         "where": {
-          "deviceType": "ios", 
-	"citi": true
+        	 "deviceType": "ios", 
+		"citi": true
         },
         "data": {
              "alert": "hi", "badge":3 }}' \
   	https://api.parse.com/1/push
 
 **Parse Background Push**
-Sends a background push (invisible to user) with one extra key value pair ("extra")
+Sends a background push (invisible to user) to all iOS and android devices with one extra key value pair ("extra")
 
 	curl -X POST \
 	 -H "X-Parse-Application-Id: AppID" \
