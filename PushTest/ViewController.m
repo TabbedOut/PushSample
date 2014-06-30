@@ -2,7 +2,7 @@
 //  ViewController.m
 //  PushTest
 //
-//  Created by Drew TREYBIG on 6/11/14.
+//  Created by Davis Treybig on 6/11/14.
 //  Copyright (c) 2014 Davis Treybig. All rights reserved.
 //
 
@@ -24,7 +24,7 @@
 }
 
 - (IBAction)parseTestPush:(id)sender {
-    //Sample code to send parse push from in app
+    //Sample code to send parse push from in app. Sends a push to all iOS devices with the specified alert which will increment badge values
     NSDictionary *data = [NSDictionary dictionaryWithObjectsAndKeys:
                           @"This is a Parse test push", @"alert",
                           @"Increment", @"badge",
@@ -37,8 +37,7 @@
 }
 
 - (IBAction) amazonTestPush:(id)sender {
-    //Sample code to send Amazon Push in app
-    //create client
+    //Sample code to send Amazon Push in app. Sends a push to all devices with message "Amazon Test". 
     AmazonSNSClient *snsClient = [[AmazonSNSClient alloc] initWithAccessKey:@"AccessKey" withSecretKey:@"SecretKey"];
     snsClient.endpoint = @"Endpoint";
     

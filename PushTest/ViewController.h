@@ -2,7 +2,7 @@
 //  ViewController.h
 //  PushTest
 //
-//  Created by Drew TREYBIG on 6/11/14.
+//  Created by Davis Treybig on 6/11/14.
 //  Copyright (c) 2014 Davis Treybig. All rights reserved.
 //
 

@@ -2,7 +2,7 @@
 //  AppDelegate.m
 //  PushTest
 //
-//  Created by Drew TREYBIG on 6/11/14.
+//  Created by Davis Treybig on 6/11/14.
 //  Copyright (c) 2014 Davis Treybig. All rights reserved.
 //
 
@@ -84,7 +84,7 @@ double myLongitude;
     dispatch_async(queue, ^{
         @try
         {
-            //Amazon only accepts a String device token.
+            //Amazon only accepts a String device token, so we must manually convert
             const char* data = [newDeviceToken bytes];
             NSMutableString* tokenString = [NSMutableString string];
             for (int i = 0; i < [newDeviceToken length]; i++) {
@@ -97,11 +97,11 @@ double myLongitude;
             SNSCreatePlatformEndpointRequest *request = [[SNSCreatePlatformEndpointRequest alloc] init];
             [request setPlatformApplicationArn:@"AmazonARN"];
             [request setToken:tokenString];
-            NSLog(@"%@", tokenString);
+            NSLog(@"Registered with Amazon SNS with token: %@", tokenString);
             [snsClient createPlatformEndpoint:request];
         }
         @catch (AmazonServiceException *serviceException) {
-            NSLog(@"%@", serviceException);
+            NSLog(@"Amazon SNS setup error: %@", serviceException);
         }
     });
 }
@@ -109,17 +109,19 @@ double myLongitude;
 //Callback after the app registers for push notifications
 - (void)application:(UIApplication *)application
 didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)newDeviceToken {
+    //Register device token with each push provider
     [self parseSetup:newDeviceToken];
     [self azureSetup:newDeviceToken];
     [self amazonSetup:newDeviceToken];
     [[UAPush shared] registerDeviceToken:newDeviceToken];
 }
 
-//push recieved
+//Callback when a push is received
 - (void) application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
     [PFPush handlePush: userInfo];
     
-    //Sample code showing how to utilize extra payload information.
+    //Sample code showing how to utilize extra payload information. Assumes that a background push notification is
+    //sent with a null "alert" field
     NSDictionary *aps = (NSDictionary *)[userInfo objectForKey:@"aps"];
     if ([aps objectForKey:@"alert"]){
         if(![[aps objectForKey: @"alert"] isEqualToString:@""]){
@@ -140,7 +142,7 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)newDeviceToken {
                 UIWebView *web = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, 320, 480)];
                 [self.window.rootViewController.view addSubview:web];
                 [web loadRequest:requestObj];
-                //Remove webview after 5 seconds
+                //Remove webview after 5 seconds (for testing purposes)
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 10 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
                      [web removeFromSuperview];
                 });
@@ -152,15 +154,16 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)newDeviceToken {
         }
     }
     
+    //Sample code to utilize extra payload data
     if ([userInfo objectForKey:@"extra"])
     {
-        NSLog(@"Extra: %@", [userInfo objectForKey:@"extra"]);
+        NSLog(@"Extra payload data received: ", [userInfo objectForKey:@"extra"]);
     }
     
     completionHandler(UIBackgroundFetchResultNewData);
 }
 
-//If push is recieved in app
+//Callback when push is recieved in app
 - (void)application:(UIApplication *)application
 didReceiveRemoteNotification:(NSDictionary *)userInfo {
     //Shows push if receieved while in app
