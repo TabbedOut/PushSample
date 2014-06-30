@@ -1,10 +1,11 @@
 Sample code for implementation of Amazon SNS, Parse Push, Urban Airship, and Azure Mobile Hub in an iOS client
 -----------------
 
-Some sample REST code to push to both Urban Airship and Parse is below (the keys would have to be replaced to their actual values):
+Some sample REST code (with curl) to push to both Urban Airship and Parse is below (the keys would have to be replaced to their actual values):
 
 
 **Parse Basic Push** 
+
 Pushes to IOS devices with an extra payload key-value pair for a url
 
 curl -X POST   
