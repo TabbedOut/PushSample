@@ -113,9 +113,14 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)newDeviceToken {
     [self parseSetup:newDeviceToken];
     [self azureSetup:newDeviceToken];
     [self amazonSetup:newDeviceToken];
-    [[UAPush shared] registerDeviceToken:newDeviceToken];
+    [self urbanAirshipSetup:newDeviceToken];
 }
 
+- (void) urbanAirshipSetup: (NSData*) deviceToken {
+    [[UAPush shared] registerDeviceToken:deviceToken];
+    //Adding sample tags
+    [[UAPush shared] addTagsToCurrentDevice: [NSArray arrayWithObjects:@"test", @"sample", @"example", nil]];
+}
 //Callback when a push is received
 - (void) application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
     [PFPush handlePush: userInfo];
