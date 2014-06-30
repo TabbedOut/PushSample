@@ -1,10 +1,11 @@
 Sample code for implementation of Amazon SNS, Parse Push, Urban Airship, and Azure Mobile Hub in an iOS client
-======================================
+-----------------
 
 Some sample REST code to push to both Urban Airship and Parse is below (the keys would have to be replaced to their actual values):
 
 
-**Basic Push to IOS devices with an extra payload key-value pair for a url**
+**Parse Basic Push** 
+Pushes to IOS devices with an extra payload key-value pair for a url**
 
 curl -X POST   
 -H "X-Parse-Application-Id: appID"   
@@ -19,7 +20,8 @@ curl -X POST
       }' \
  https://api.parse.com/1/push
 
-Only to Citi Push: Sends a push to all iOS devices where the citi flag is true. The alert is "hi" and the badge is set to 3
+**Parse Only to Citi Push** 
+Sends a push to all iOS devices where the citi flag is true. The alert is "hi" and the badge is set to 3
 
 curl -X POST \
   -H "X-Parse-Application-Id: appID" \
@@ -35,7 +37,8 @@ curl -X POST \
 ' \
   https://api.parse.com/1/push
 
-Tabbedout Both Background Code: Sends a background push (invisible to user) with one extra key value pair ("extra")
+**Parse Background Push**
+Sends a background push (invisible to user) with one extra key value pair ("extra")
 
 curl -X POST \
   -H "X-Parse-Application-Id: AppID" \
@@ -54,7 +57,8 @@ curl -X POST \
       }' \
   https://api.parse.com/1/push
 
-Query for Location: Queries for the 10 devices closest to a given geo-point. 
+**Parse Query for Location**
+Queries for the 10 devices closest to a given geo-point. 
 
 curl -X GET \
   -H "X-Parse-Application-Id: AppID" \
@@ -72,7 +76,8 @@ curl -X GET \
       }' \
   https://api.parse.com/1/installations
 
-Urban Airship Push (with extra payload): Sends a push to all iOS devices with given alert and the default sound. Sets the badge to 40 and has 3 extra key-value pairs
+**Urban Airship Push (with extra payload)** 
+Sends a push to all iOS devices with given alert and the default sound. Sets the badge to 40 and has 3 extra key-value pairs
 
 curl -X POST -u "MasterKey" \
    -H "Content-Type: application/json" \
